@@ -1,0 +1,3 @@
+import getData
+
+getData()
