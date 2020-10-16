@@ -11,7 +11,7 @@ massProton = 1.007276
 massNeutron = 1.008664
 uTOKgConversion = 1.660540*pow(10, -27)
 lightSpeed = 299792458
-JTOMeVConversion = 6241506479963.2 
+JTOMeVConversion = 1.6021773 * pow(10, -13)
 
 with open('IsotopicMass.json', 'r') as f:
     isotopicMass = json.loads(f.read())
@@ -29,14 +29,22 @@ for element in isotopicMass :
     xpos.append(element[0])
     ypos.append(element[1] - element[0])
     zpos.append(0)
+    '''
     molarMassCoreWithoutBounds = (element[0] * massProton) + ((element[1] - element[0]) * massNeutron)
     molarMassCore = isotopicMass[elementName]['AtomicMass'] - (element[0] * massElectron)
     lostMass = molarMassCoreWithoutBounds - molarMassCore
     bindingEnergy = lostMass * uTOKgConversion * pow(lightSpeed, 2)
     bindingEnergy = bindingEnergy * JTOMeVConversion
     specificBindingEnergy = bindingEnergy / element[1]
+    '''
+    molarMassCore = isotopicMass[elementName]['AtomicMass'] - (element[0] * massElectron)
+    if isotopicMass[elementName]['AtomicMass'] == -1:
+      molarMassCore = 0
+    print(elementName, molarMassCore)
+    massCore = molarMassCore * uTOKgConversion
+    restEnergyCore = massCore * lightSpeed * lightSpeed
     if isotopicMass[elementName]['AtomicMass'] != -1:
-        dz.append(specificBindingEnergy)
+        dz.append(restEnergyCore)
     else:
         dz.append(0)
 
