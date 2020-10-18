@@ -28,16 +28,6 @@ for element in isotopicMass :
     xpos.append(element[0])
     ypos.append(element[1] - element[0])
     zpos.append(0)
-
-    '''    
-    molarMassCoreWithoutBounds = (element[0] * massProton) + ((element[1] - element[0]) * massNeutron)
-    print(element[0], type(element[0]), element[1], type(element[1]))
-    molarMassCore = isotopicMass[elementName]['AtomicMass'] - (element[0] * massElectron)
-    lostMass = molarMassCoreWithoutBounds - molarMassCore
-    bindingEnergy = lostMass * 931.48
-    specificBindingEnergy = bindingEnergy / element[1]
-    print(specificBindingEnergy)
-    '''
     molarMassCore = isotopicMass[elementName]['AtomicMass'] - (element[0] * massElectron)
     if isotopicMass[elementName]['AtomicMass'] == -1:
       molarMassCore = 0
