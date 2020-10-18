@@ -27,7 +27,8 @@ for element in isotopicMass :
     element = np.array(element).astype(np.float)
     xpos.append(element[0])
     ypos.append(element[1] - element[0])
-    zpos.append(0)
+    zpos.append(930)
+
     molarMassCore = isotopicMass[elementName]['AtomicMass'] - (element[0] * massElectron)
     if isotopicMass[elementName]['AtomicMass'] == -1:
       molarMassCore = 0
