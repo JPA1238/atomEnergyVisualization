@@ -9,10 +9,9 @@ import json
 massElectron = 0.00054858
 massProton = 1.0072765
 massNeutron = 1.0086649
-uTOKgConversion = 1.67258*pow(10, -27)
-lightSpeed2 = 89875517873681764
-JTOMeVConversion = 1.6021773 * pow(10, -19)
-
+uTOKgConversion = 1.660540199e-27
+lightSpeed = 299792458
+JTOMeVConversion = 6241506479963.2
 with open('IsotopicMass.json', 'r') as f:
     isotopicMass = json.loads(f.read())
 
@@ -26,33 +25,29 @@ for element in isotopicMass :
     element = element.replace('element', '')
     element = element.split('.')
     element = np.array(element).astype(np.float)
-    print(element, type(element[0]))
     xpos.append(element[0])
     ypos.append(element[1] - element[0])
     zpos.append(0)
-    
+
+    '''    
     molarMassCoreWithoutBounds = (element[0] * massProton) + ((element[1] - element[0]) * massNeutron)
+    print(element[0], type(element[0]), element[1], type(element[1]))
     molarMassCore = isotopicMass[elementName]['AtomicMass'] - (element[0] * massElectron)
     lostMass = molarMassCoreWithoutBounds - molarMassCore
     bindingEnergy = lostMass * 931.48
     specificBindingEnergy = bindingEnergy / element[1]
     print(specificBindingEnergy)
     '''
-    lostMass *= uTOKgConversion
-    bindingEnergy = lostMass * lightSpeed2
-    bindingEnergy *= JTOMeVConversion
-    specificBindingEnergy = bindingEnergy / element[1]
-    '''
-    '''
     molarMassCore = isotopicMass[elementName]['AtomicMass'] - (element[0] * massElectron)
     if isotopicMass[elementName]['AtomicMass'] == -1:
       molarMassCore = 0
-    print(elementName, molarMassCore)
     massCore = molarMassCore * uTOKgConversion
-    restEnergyCore = massCore * lightSpeed * lightSpeed
-    '''
+    restEnergyCore = massCore * lightSpeed**2
+    restEnergyCore = restEnergyCore * JTOMeVConversion
+    specificRestEnergyCore = restEnergyCore / element[1]
+    print(specificRestEnergyCore)
     if isotopicMass[elementName]['AtomicMass'] != -1:
-        dz.append(specificBindingEnergy)
+        dz.append(specificRestEnergyCore - 930)
     else:
         dz.append(0)
 
