@@ -25,6 +25,7 @@ for element in isotopicMass :
     massCore = isotopicMass[elementName]['AtomicMass'] - element[0] * massElectron
     massDefect = massCoreWithoutBounds - massCore 
     BE = massDefect * uTOKgConversion * lightSpeed**2
+    BE = BE * JTOMeVConversion
     SBE = BE / element[1]
 
     if isotopicMass[elementName]['AtomicMass'] != -1:
